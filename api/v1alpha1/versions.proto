@@ -1,0 +1,30 @@
+syntax = "proto3";
+package versions.v1alpha1.versions;
+
+option go_package = "github.com/mt-inside/versions-over-ip/api/v1alpha1";
+
+
+import "google/api/annotations.proto";
+import "google/longrunning/operations.proto";
+import "google/api/client.proto";
+
+
+service Versions {
+  option (google.api.default_host) = "localhost:50051"; // TCP address; not URL
+
+  rpc GetVersions (VersionsRequest) returns (google.longrunning.Operation) {
+    option (google.api.http).get = "/v1alpha1/versions/{org}/{repo}";
+    option (google.longrunning.operation_info) = {
+      response_type: "VersionsResponse"
+    };
+  }
+}
+
+message VersionsRequest {
+  string org = 1;
+  string repo = 2;
+}
+
+message VersionsResponse {
+  string msg = 1;
+}

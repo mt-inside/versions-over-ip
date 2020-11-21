@@ -1,0 +1,22 @@
+{
+    "methodConfig": [
+      {
+        "name": [
+          {
+            "service": "versions.Versions",
+            "method": "GetVersions"
+          }
+        ],
+        "timeout": "600s",
+        "retryPolicy": {
+          "initialBackoff": "0.200s",
+          "maxBackoff": "60s",
+          "backoffMultiplier": 1.3,
+          "retryableStatusCodes": [
+            "UNKNOWN",
+            "UNAVAILABLE"
+          ]
+        }
+      }
+    ]
+  }
