@@ -84,21 +84,29 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 
 	if item, ok := workItems[in.Name]; ok {
 		// lol hack
-		ss, _ := fetch.Github(item.Req.Org, item.Req.Repo, item.Req.Depth, item.Req.Count)
+		ss, err := fetch.Github(item.Req.Org, item.Req.Repo, item.Req.Depth, item.Req.Count)
 		log.Printf("%v", ss)
+		if err != nil {
+			resp = &lropb.Operation{
+				Name: in.Name,
+				Done: false,
+			}
+			log.Printf("error fetching: %v", err)
+			err = status.Errorf(codes.InvalidArgument, "Error fetching versions for request %s: %v.", in.Name, err)
+		} else {
+			value, _ := ptypes.MarshalAny(
+				&versionspb.VersionsResponse{Serieses: series2proto(ss)},
+			)
+			resp = &lropb.Operation{
+				Name:   in.Name,
+				Done:   true,
+				Result: &lropb.Operation_Response{Response: value},
+			}
+			err = nil
 
-		// Fake instant completion for now
-		log.Printf("LRO Complete: %s", in.Name)
-		value, _ := ptypes.MarshalAny(
-			&versionspb.VersionsResponse{Serieses: series2proto(ss)},
-		)
-		resp = &lropb.Operation{
-			Name:   in.Name,
-			Done:   true,
-			Result: &lropb.Operation_Response{Response: value},
+			log.Printf("LRO Complete: %s", in.Name)
+			delete(workItems, in.Name)
 		}
-		delete(workItems, in.Name)
-		err = nil
 	} else {
 		resp = &lropb.Operation{
 			Name: in.Name,

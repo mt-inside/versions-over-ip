@@ -49,8 +49,12 @@ func Github(org, repo string, depth, count int32) ([]Series, error) {
 		return nil, err
 	}
 
-	ss := parseGithub(data, depth, count)
-	return ss, nil
+	ss, err := parseGithub(data, depth, count)
+	if err != nil {
+		return nil, err
+	} else {
+		return ss, nil
+	}
 }
 
 /* Algo:
@@ -62,11 +66,14 @@ func Github(org, repo string, depth, count int32) ([]Series, error) {
 * []release[:count]
  */
 /* since there's no map etc in go, do a linear one */
-func parseGithub(rs []ghrelease, depth, count int32) []Series {
+func parseGithub(rs []ghrelease, depth, count int32) ([]Series, error) {
 	ss := make([]Series, count)
 
 	for _, r := range rs {
-		v, _ := version.NewVersion(r.TagName)
+		v, err := version.NewVersion(r.TagName)
+		if err != nil {
+			return nil, err
+		}
 
 		inject(ss, v, r.Prerelease, depth)
 	}
