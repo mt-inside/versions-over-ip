@@ -78,7 +78,19 @@ func parseGithub(rs []ghrelease, depth, count int32) ([]Series, error) {
 		inject(ss, v, r.Prerelease, depth)
 	}
 
-	return ss
+	var trunc bool
+	var i int
+	for i = range ss {
+		if ss[i].Prefix == nil {
+			trunc = true
+			break
+		}
+	}
+	if trunc {
+		ss = ss[:i]
+	}
+
+	return ss, nil
 }
 
 /* Mutates in place to avoid hammering the allocator.
