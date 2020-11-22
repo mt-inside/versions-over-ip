@@ -7,7 +7,7 @@
             "method": "GetVersions"
           }
         ],
-        "timeout": "600s",
+        "timeout": "5s",
         "retryPolicy": {
           "initialBackoff": "0.200s",
           "maxBackoff": "60s",
