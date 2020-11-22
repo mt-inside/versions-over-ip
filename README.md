@@ -8,6 +8,7 @@ Move most stuff into pgk
 .pb.go should be built into api? gprc / gapic stubs should not
 make a hyper.js client for the fetch
 release dates (make the versions in the proto in to a type rather than string)
+gapic / gax: retrying on InvalidArg with it shouldn't, ignoring the timeout
 
 proto pkg needs full name (.../api), build into api.
 
