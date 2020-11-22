@@ -1,9 +1,13 @@
+# FIXME
+No idea where versionsclient is getting `github.com/mt-inside/versions-over-ip/api` from
+
 # TODO
 Don't download / vendor api-common-protos - how?
 Move all packages to github.com/mt-inside/versions-over-ip
 Move most stuff into pgk
 .pb.go should be built into api? gprc / gapic stubs should not
 make a hyper.js client for the fetch
+release dates (make the versions in the proto in to a type rather than string)
 
 proto pkg needs full name (.../api), build into api.
 

@@ -1,6 +1,6 @@
 syntax = "proto3";
-package versions.v1alpha1.versions;
 
+package v1alpha1;
 option go_package = "github.com/mt-inside/versions-over-ip/api/v1alpha1";
 
 
@@ -23,8 +23,16 @@ service Versions {
 message VersionsRequest {
   string org = 1;
   string repo = 2;
+  int32 depth = 3;
+  int32 count = 4;
 }
 
 message VersionsResponse {
-  string msg = 1;
+  repeated Series serieses = 1;
+}
+
+message Series {
+  string prefix = 1;
+  optional string stable = 2;
+  optional string prerelease = 3;
 }

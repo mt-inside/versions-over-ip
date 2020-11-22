@@ -11,18 +11,21 @@ import (
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/google/uuid"
+	"github.com/hashicorp/go-version"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	versions "github.com/mt-inside/versions-over-ip/api/v1alpha1"
+	versionspb "github.com/mt-inside/versions-over-ip/api/v1alpha1"
 	lropb "google.golang.org/genproto/googleapis/longrunning"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+
+	"github.com/mt-inside/versions-over-ip/pkg/fetch"
 )
 
 type workItem struct {
 	ID  string
-	Req *versions.VersionsRequest
+	Req *versionspb.VersionsRequest
 }
 
 var (
@@ -33,7 +36,7 @@ var (
 
 type versionsServer struct{}
 
-func (s *versionsServer) GetVersions(ctxt context.Context, in *versions.VersionsRequest) (*lropb.Operation, error) {
+func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.VersionsRequest) (*lropb.Operation, error) {
 	log.Printf("GetVersions(%s/%s)", in.Org, in.Repo)
 
 	uid, _ := uuid.NewUUID()
@@ -79,11 +82,15 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 	var resp *lropb.Operation
 	var err error
 
-	if _, ok := workItems[in.Name]; ok {
+	if item, ok := workItems[in.Name]; ok {
+		// lol hack
+		ss, _ := fetch.Github(item.Req.Org, item.Req.Repo, item.Req.Depth, item.Req.Count)
+		log.Printf("%v", ss)
+
 		// Fake instant completion for now
 		log.Printf("LRO Complete: %s", in.Name)
 		value, _ := ptypes.MarshalAny(
-			&versions.VersionsResponse{Msg: "1.2.3"},
+			&versionspb.VersionsResponse{Serieses: series2proto(ss)},
 		)
 		resp = &lropb.Operation{
 			Name:   in.Name,
@@ -101,6 +108,28 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 	}
 
 	return resp, err
+}
+
+func series2proto(ss []fetch.Series) (res []*versionspb.Series) {
+	res = make([]*versionspb.Series, len(ss))
+	for i, s := range ss {
+		res[i] = &versionspb.Series{
+			Prefix:     *mapVersionString(s.Prefix),
+			Stable:     mapVersionString(s.Stable),
+			Prerelease: mapVersionString(s.Prerelease),
+		}
+	}
+	return
+}
+
+func mapVersionString(v *version.Version) *string {
+	if v == nil {
+		return nil
+	} else {
+		/* ffs golang */
+		s := v.String()
+		return &s
+	}
 }
 
 func (s *lroServer) WaitOperation(ctxt context.Context, in *lropb.WaitOperationRequest) (*lropb.Operation, error) {
@@ -154,7 +183,7 @@ func main() {
 	sopts := []grpc.ServerOption{grpc.MaxConcurrentStreams(10)}
 	s := grpc.NewServer(sopts...)
 
-	versions.RegisterVersionsServer(s, &versionsServer{})
+	versionspb.RegisterVersionsServer(s, &versionsServer{})
 	healthpb.RegisterHealthServer(s, &healthServer{})
 	lropb.RegisterOperationsServer(s, &lroServer{})
 

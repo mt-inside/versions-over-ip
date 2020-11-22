@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"google.golang.org/api/option"
@@ -15,7 +16,6 @@ func main() {
 	ctxt := context.Background()
 
 	client, err := versionsclient.NewVersionsClient(ctxt,
-		//option.WithGRPCDialOption(grpc.WithTransportCredentials(insecure.NewCredentials())),
 		option.WithGRPCDialOption(grpc.WithInsecure()),
 		option.WithoutAuthentication(),
 	)
@@ -23,7 +23,7 @@ func main() {
 		log.Fatalf("Could not make gapic client: %v", err)
 	}
 
-	resplro, err := client.GetVersions(ctxt, &versions.VersionsRequest{Org: "kubernetes", Repo: "kubernetes"})
+	resplro, err := client.GetVersions(ctxt, &versions.VersionsRequest{Org: "kubernetes", Repo: "kubernetes", Depth: 1, Count: 5})
 	if err != nil {
 		log.Fatalf("Could not initiate request for versions: %v", err)
 	}
@@ -36,5 +36,18 @@ func main() {
 	}
 
 	log.Printf("Done: %v", resplro.Done())
-	log.Printf("%v", value)
+
+	render(value.Serieses)
+}
+func render(ss []*versions.Series) {
+	for _, s := range ss {
+		fmt.Printf("%s: ", s.GetPrefix())
+		if s.GetStable() != "" { // "" is how optionals are presented, not nil
+			fmt.Printf("%s", s.GetStable())
+		}
+		if s.GetPrerelease() != "" /* && s.Prerelease.GreaterThan(s.Stable) */ {
+			fmt.Printf(" (PRE %s)", s.GetPrerelease())
+		}
+		fmt.Printf("\n")
+	}
 }
