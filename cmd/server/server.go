@@ -34,7 +34,9 @@ var (
 	workItems map[string]workItem = make(map[string]workItem)
 )
 
-type versionsServer struct{}
+type versionsServer struct {
+	versionspb.UnimplementedVersionsServer
+}
 
 func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.VersionsRequest) (*lropb.Operation, error) {
 	log.Printf("GetVersions(%s/%s)", in.Org, in.Repo)

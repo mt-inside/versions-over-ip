@@ -6,14 +6,19 @@
 # This is all messy cause server and client share the same code base. Ideally you'd have an API repo, and then separate client and server codebases, which would vendor snapshots of those protos (yay forwards/backwards compat)
 # - We currently build proto + grpc (client and server) stubs to /api, the server uses them, the client ignores them but the gapic stubs it calls instead use them
 
+# go_out - versions.pb.go - the structs
+# go-grpc_out - versions_grpc.pb.go - gRPC server and client (we only use the server)
+# go_gapic_out - versionsclient/ - gAPIC super client based on gax
 protoc \
-    -I "./api-common-protos" \
+    -I "api-common-protos" \
     -I "api/v1alpha1" \
     --experimental_allow_proto3_optional \
     --descriptor_set_out="api/v1alpha1/versions.proto.pb" \
     --include_imports \
-    --go_out=plugins=grpc:"api/v1alpha1" \
+    --go_out="api/v1alpha1" \
     --go_opt=paths=source_relative \
+    --go-grpc_out="api/v1alpha1" \
+    --go-grpc_opt=paths=source_relative \
     --go_gapic_out="cmd/client" \
     --go_gapic_opt="go-gapic-package=versionsclient;versionsclient" \
     --go_gapic_opt="grpc-service-config=cmd/client/versions_grpc_service_config.json" \
