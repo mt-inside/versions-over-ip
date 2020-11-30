@@ -2,6 +2,14 @@
 No idea where versionsclient is getting `github.com/mt-inside/versions-over-ip/api` from
 
 # TODO
+scripted gen of stubs
+* into api
+* server - google new proto
+* server - gogo
+* client - gapic
+proto (EN 5 steps for resrouce)
+read config from yaml file
+be calls can be in series for now
 Don't download / vendor api-common-protos - how?
 Move all packages to github.com/mt-inside/versions-over-ip
 Move most stuff into pgk
