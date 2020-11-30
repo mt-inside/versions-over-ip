@@ -20,6 +20,12 @@ gapic / gax: retrying on InvalidArg with it shouldn't, ignoring the timeout
 
 proto pkg needs full name (.../api), build into api.
 
+# Raison d'être
+Was born as a GAPIC test, and a NATS test.
+Can also be the go-to example for manual proto/grpc generation (cf go-grpc-bazel-example)
+* try gapic, gogo, etc
+* try proto plugins, extensions, validators
+
 # Architecture
 Seems weird to have a client that makes a network call to a server, that then makes another network call, but yanno it's an experiement
 Also it allows multiple clients and moves the logic about aggregating versions off them
