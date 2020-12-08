@@ -1,6 +1,14 @@
 # FIXME
 No idea where versionsclient is getting `github.com/mt-inside/versions-over-ip/api` from
 
+gogo (server) doesn't support:
+* optional (field prescence)
+gapic (client) doesn't support:
+* oneof - `md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v&%s=%v", "org", url.QueryEscape(req.App.(*apipb.VersionsRequest_Github).Github.GetOrg()), "repo", url.QueryEscape(req.App.(*apipb.VersionsRequest_Github).Github.GetRepo())))`
+  * hack: delete md and following line
+* bug in golang import
+  * hack: rename import alias
+
 # TODO
 scripted gen of stubs
 * into api
