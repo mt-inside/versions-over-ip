@@ -4,10 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 
+	"github.com/golang/protobuf/ptypes"
 	versions "github.com/mt-inside/versions-over-ip/api/v1alpha1"
 	"github.com/mt-inside/versions-over-ip/cmd/client/versionsclient"
 )
@@ -68,12 +70,13 @@ func fetch(
 
 func render(ss []*versions.Series) {
 	for _, s := range ss {
-		fmt.Printf("%s: ", s.GetPrefix())
-		if s.GetStable() != "" { // "" is how optionals are presented, not nil
-			fmt.Printf("%s", s.GetStable())
-		}
-		if s.GetPrerelease() != "" /* && s.Prerelease.GreaterThan(s.Stable) */ {
-			fmt.Printf(" (PRE %s)", s.GetPrerelease())
+		fmt.Printf("%s: ", s.GetName())
+		for _, r := range s.GetReleases() {
+			d, _ := ptypes.Timestamp(r.GetDate())
+
+			fmt.Printf("%s %s (%d days ago)", r.GetName(), r.GetVersion(), int(time.Since(d).Hours())/24)
+			// TODO: date as first class, calc here days from now()
+			fmt.Printf(" | ")
 		}
 		fmt.Printf("\n")
 	}

@@ -4,6 +4,7 @@ package v1alpha1;
 option go_package = "github.com/mt-inside/versions-over-ip/api/v1alpha1";
 
 
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "google/longrunning/operations.proto";
 import "google/api/client.proto";
@@ -32,7 +33,12 @@ message VersionsResponse {
 }
 
 message Series {
-  string prefix = 1;
-  optional string stable = 2;
-  optional string prerelease = 3;
+  string name = 1;
+  repeated Release releases = 2;
+}
+
+message Release {
+  string name = 1;
+  string version = 2;
+  google.protobuf.Timestamp date = 3;
 }

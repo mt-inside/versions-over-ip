@@ -11,7 +11,6 @@ import (
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/google/uuid"
-	"github.com/hashicorp/go-version"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -122,24 +121,21 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 
 func series2proto(ss []fetch.Series) (res []*versionspb.Series) {
 	res = make([]*versionspb.Series, len(ss))
+
 	for i, s := range ss {
+		rs := []*versionspb.Release{}
+		for n, r := range s.Releases {
+			d, _ := ptypes.TimestampProto(r.Date)
+			rs = append(rs, &versionspb.Release{Name: n, Version: r.Version.String(), Date: d})
+		}
+
 		res[i] = &versionspb.Series{
-			Prefix:     *mapVersionString(s.Prefix),
-			Stable:     mapVersionString(s.Stable),
-			Prerelease: mapVersionString(s.Prerelease),
+			Name:     s.Name,
+			Releases: rs,
 		}
 	}
 	return
-}
 
-func mapVersionString(v *version.Version) *string {
-	if v == nil {
-		return nil
-	} else {
-		/* ffs golang */
-		s := v.String()
-		return &s
-	}
 }
 
 func (s *lroServer) WaitOperation(ctxt context.Context, in *lropb.WaitOperationRequest) (*lropb.Operation, error) {
