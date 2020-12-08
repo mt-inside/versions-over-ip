@@ -38,8 +38,6 @@ type versionsServer struct {
 }
 
 func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.VersionsRequest) (*lropb.Operation, error) {
-	log.Printf("GetVersions(%s/%s)", in.Org, in.Repo)
-
 	uid, _ := uuid.NewUUID()
 	work := workItem{ID: uid.String(), Req: in}
 	workItems[uid.String()] = work
@@ -84,8 +82,22 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 	var err error
 
 	if item, ok := workItems[in.Name]; ok {
-		// lol hack
-		ss, err := fetch.Github(item.Req.Org, item.Req.Repo, item.Req.Depth, item.Req.Count)
+		// lol hack - sync innit
+
+		var ss []fetch.Series
+		var err error
+		switch app := item.Req.GetApp().(type) {
+		case *versionspb.VersionsRequest_Github:
+			gh := app.Github
+			log.Printf("GetVersions(github: %s/%s)", gh.GetOrg(), gh.GetRepo())
+
+			ss, err = fetch.Github(gh.GetOrg(), gh.GetRepo(), gh.GetDepth(), gh.GetCount())
+		case *versionspb.VersionsRequest_Linux:
+			log.Printf("GetVersions(linux)")
+
+			ss, err = fetch.Linux()
+		}
+
 		log.Printf("%v", ss)
 		if err != nil {
 			resp = &lropb.Operation{

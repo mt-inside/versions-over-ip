@@ -26,32 +26,69 @@ func main() {
 	}
 
 	var ss []*versions.Series
+	ss = fetchLinux(client)
+	render(ss)
 	//ss = fetch(client, "zfsonlinux", "zfs", 2, 2)
 	//render(ss)
-	ss = fetch(client, "golang", "go", 2, 2)
+	ss = fetchGithub(client, "golang", "go", 2, 2)
 	render(ss)
-	ss = fetch(client, "kubernetes", "kubernetes", 2, 5)
+	ss = fetchGithub(client, "kubernetes", "kubernetes", 2, 5)
 	render(ss)
-	ss = fetch(client, "helm", "helm", 2, 2)
+	ss = fetchGithub(client, "helm", "helm", 2, 2)
 	render(ss)
-	ss = fetch(client, "envoyproxy", "envoy", 2, 2)
+	ss = fetchGithub(client, "envoyproxy", "envoy", 2, 2)
 	render(ss)
-	ss = fetch(client, "istio", "istio", 2, 2)
+	ss = fetchGithub(client, "istio", "istio", 2, 2)
 	render(ss)
-	//ss = fetch(client, "linkerd", "linkerd2", 1, 2)
+	//ss = fetchGithub(client, "linkerd", "linkerd2", 1, 2)
 	//render(ss)
-	ss = fetch(client, "hashicorp", "terraform", 2, 2)
+	ss = fetchGithub(client, "hashicorp", "terraform", 2, 2)
 	render(ss)
 }
 
-func fetch(
+func fetchGithub(
 	client *versionsclient.VersionsClient,
 	org string, repo string,
 	depth, count int32,
 ) []*versions.Series {
 	ctxt := context.Background()
 
-	resplro, err := client.GetVersions(ctxt, &versions.VersionsRequest{Org: org, Repo: repo, Depth: depth, Count: count})
+	resplro, err := client.GetVersions(
+		ctxt,
+		&versions.VersionsRequest{
+			App: &versions.VersionsRequest_Github{
+				Github: &versions.GithubRepo{
+					Org: org, Repo: repo, Depth: depth, Count: count,
+				},
+			},
+		},
+	)
+	if err != nil {
+		log.Fatalf("Could not initiate request for versions: %v", err)
+	}
+
+	log.Printf("Initiated fetch: %s", resplro.Name())
+
+	value, err := resplro.Wait(ctxt)
+	if err != nil {
+		log.Fatalf("Could not wait synchronously: %v", err)
+	}
+
+	log.Printf("Done: %v", resplro.Done())
+
+	return value.Serieses
+}
+func fetchLinux(
+	client *versionsclient.VersionsClient,
+) []*versions.Series {
+	ctxt := context.Background()
+
+	resplro, err := client.GetVersions(
+		ctxt,
+		&versions.VersionsRequest{
+			App: &versions.VersionsRequest_Linux{},
+		},
+	)
 	if err != nil {
 		log.Fatalf("Could not initiate request for versions: %v", err)
 	}

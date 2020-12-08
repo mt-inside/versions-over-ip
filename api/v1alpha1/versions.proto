@@ -22,11 +22,19 @@ service Versions {
 }
 
 message VersionsRequest {
+  oneof app {
+    GithubRepo github = 1;
+    LinuxOrg linux = 2;
+  }
+}
+
+message GithubRepo {
   string org = 1;
   string repo = 2;
   int32 depth = 3;
   int32 count = 4;
 }
+message LinuxOrg { }
 
 message VersionsResponse {
   repeated Series serieses = 1;
