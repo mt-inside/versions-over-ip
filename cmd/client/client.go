@@ -14,6 +14,14 @@ import (
 	"github.com/mt-inside/versions-over-ip/cmd/client/versionsclient"
 )
 
+const trace_enabled = false
+
+func trace(fmt string, args ...interface{}) {
+	if trace_enabled { // from args of etcd
+		log.Printf(fmt, args...)
+	}
+}
+
 func main() {
 	ctxt := context.Background()
 
@@ -67,14 +75,14 @@ func fetchGithub(
 		log.Fatalf("Could not initiate request for versions: %v", err)
 	}
 
-	log.Printf("Initiated fetch: %s", resplro.Name())
+	trace("Initiated fetch: %s", resplro.Name())
 
 	value, err := resplro.Wait(ctxt)
 	if err != nil {
 		log.Fatalf("Could not wait synchronously: %v", err)
 	}
 
-	log.Printf("Done: %v", resplro.Done())
+	trace("Done: %v", resplro.Done())
 
 	return value.Serieses
 }
@@ -93,14 +101,14 @@ func fetchLinux(
 		log.Fatalf("Could not initiate request for versions: %v", err)
 	}
 
-	logg("Initiated fetch: %s", resplro.Name())
+	trace("Initiated fetch: %s", resplro.Name())
 
 	value, err := resplro.Wait(ctxt)
 	if err != nil {
 		log.Fatalf("Could not wait synchronously: %v", err)
 	}
 
-	logg("Done: %v", resplro.Done())
+	trace("Done: %v", resplro.Done())
 
 	return value.Serieses
 }
