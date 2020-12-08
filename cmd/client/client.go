@@ -27,23 +27,23 @@ func main() {
 
 	var ss []*versions.Series
 	ss = fetchLinux(client)
-	render(ss)
+	render("Linux", ss)
 	//ss = fetch(client, "zfsonlinux", "zfs", 2, 2)
 	//render(ss)
 	ss = fetchGithub(client, "golang", "go", 2, 2)
-	render(ss)
+	render("golang", ss)
 	ss = fetchGithub(client, "kubernetes", "kubernetes", 2, 5)
-	render(ss)
+	render("kubernetes", ss)
 	ss = fetchGithub(client, "helm", "helm", 2, 2)
-	render(ss)
+	render("helm", ss)
 	ss = fetchGithub(client, "envoyproxy", "envoy", 2, 2)
-	render(ss)
+	render("envoy", ss)
 	ss = fetchGithub(client, "istio", "istio", 2, 2)
-	render(ss)
+	render("istio", ss)
 	//ss = fetchGithub(client, "linkerd", "linkerd2", 1, 2)
 	//render(ss)
 	ss = fetchGithub(client, "hashicorp", "terraform", 2, 2)
-	render(ss)
+	render("terraform", ss)
 }
 
 func fetchGithub(
@@ -93,28 +93,31 @@ func fetchLinux(
 		log.Fatalf("Could not initiate request for versions: %v", err)
 	}
 
-	log.Printf("Initiated fetch: %s", resplro.Name())
+	logg("Initiated fetch: %s", resplro.Name())
 
 	value, err := resplro.Wait(ctxt)
 	if err != nil {
 		log.Fatalf("Could not wait synchronously: %v", err)
 	}
 
-	log.Printf("Done: %v", resplro.Done())
+	logg("Done: %v", resplro.Done())
 
 	return value.Serieses
 }
 
-func render(ss []*versions.Series) {
+func render(name string, ss []*versions.Series) {
+	fmt.Printf("== %s ==\n", name)
+
 	for _, s := range ss {
 		fmt.Printf("%s: ", s.GetName())
 		for _, r := range s.GetReleases() {
 			d, _ := ptypes.Timestamp(r.GetDate())
 
 			fmt.Printf("%s %s (%d days ago)", r.GetName(), r.GetVersion(), int(time.Since(d).Hours())/24)
-			// TODO: date as first class, calc here days from now()
 			fmt.Printf(" | ")
 		}
-		fmt.Printf("\n")
+		fmt.Println()
 	}
+
+	fmt.Println()
 }
