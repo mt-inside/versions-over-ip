@@ -78,57 +78,50 @@ func (s *lroServer) ListOperations(ctx context.Context, in *lropb.ListOperations
 func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationRequest) (*lropb.Operation, error) {
 	log.Printf("GetOperation: %s", in.Name)
 
-	var resp *lropb.Operation
-	var err error
-
-	if item, ok := workItems[in.Name]; ok {
-		// lol hack - sync innit
-
-		var ss []fetch.Series
-		var err error
-		switch app := item.Req.GetApp().(type) {
-		case *versionspb.VersionsRequest_Github:
-			gh := app.Github
-			log.Printf("GetVersions(github: %s/%s)", gh.GetOrg(), gh.GetRepo())
-
-			ss, err = fetch.Github(gh.GetOrg(), gh.GetRepo(), gh.GetDepth(), gh.GetCount())
-		case *versionspb.VersionsRequest_Linux:
-			log.Printf("GetVersions(linux)")
-
-			ss, err = fetch.Linux()
-		}
-
-		log.Printf("%v", ss)
-		if err != nil {
-			resp = &lropb.Operation{
-				Name: in.Name,
-				Done: false,
-			}
-			log.Printf("error fetching: %v", err)
-			err = status.Errorf(codes.InvalidArgument, "Error fetching versions for request %s: %v.", in.Name, err)
-		} else {
-			value, _ := ptypes.MarshalAny(
-				&versionspb.VersionsResponse{Serieses: series2proto(ss)},
-			)
-			resp = &lropb.Operation{
-				Name:   in.Name,
-				Done:   true,
-				Result: &lropb.Operation_Response{Response: value},
-			}
-			err = nil
-
-			log.Printf("LRO Complete: %s", in.Name)
-			delete(workItems, in.Name)
-		}
-	} else {
-		resp = &lropb.Operation{
-			Name: in.Name,
-			Done: false,
-		}
-		err = status.Errorf(codes.NotFound, "Versions request %s not found.", in.Name)
+	notDoneResponse := &lropb.Operation{
+		Name: in.Name,
+		Done: false,
 	}
 
-	return resp, err
+	item, ok := workItems[in.Name]
+	if !ok {
+		return notDoneResponse, status.Errorf(codes.NotFound, "Versions request %s not found.", in.Name)
+	}
+
+	// lol hack - sync innit
+
+	var ss []fetch.Series
+	var err error
+	switch app := item.Req.GetApp().(type) {
+	case *versionspb.VersionsRequest_Github:
+		gh := app.Github
+		log.Printf("GetVersions(github: %s/%s)", gh.GetOrg(), gh.GetRepo())
+
+		ss, err = fetch.Github(gh.GetOrg(), gh.GetRepo(), gh.GetDepth(), gh.GetCount())
+	case *versionspb.VersionsRequest_Linux:
+		log.Printf("GetVersions(linux)")
+
+		ss, err = fetch.Linux()
+	}
+	if err != nil {
+		log.Printf("error fetching: %v", err)
+		// TODO: translate errors, eg dealine exceeded (DeadlineExceeded) vs json parse error (InvalidArgument), etc
+		return notDoneResponse, status.Errorf(codes.Unknown, "Error fetching versions for request %s: %v.", in.Name, err)
+	}
+
+	value, _ := ptypes.MarshalAny(
+		&versionspb.VersionsResponse{Serieses: series2proto(ss)},
+	)
+	resp := &lropb.Operation{
+		Name:   in.Name,
+		Done:   true,
+		Result: &lropb.Operation_Response{Response: value},
+	}
+
+	log.Printf("LRO Complete: %s", in.Name)
+	delete(workItems, in.Name)
+
+	return resp, nil
 }
 
 func series2proto(ss []fetch.Series) (res []*versionspb.Series) {
