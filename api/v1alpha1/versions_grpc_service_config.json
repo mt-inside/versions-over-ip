@@ -3,11 +3,11 @@
       {
         "name": [
           {
-            "service": "versions.Versions",
+            "service": "api.v1alpha1.Versions",
             "method": "GetVersions"
           }
         ],
-        "timeout": "5s",
+        "timeout": "10s",
         "retryPolicy": {
           "initialBackoff": "0.200s",
           "maxBackoff": "60s",
