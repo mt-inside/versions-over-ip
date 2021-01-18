@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package v1alpha1;
-option go_package = "github.com/mt-inside/versions-over-ip/api/v1alpha1";
+package api.v1alpha1;
+option go_package = "github.com/mt-inside/versions-over-ip/api/v1alpha1;v1alpha1";
 
 
 import "google/protobuf/timestamp.proto";

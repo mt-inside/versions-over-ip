@@ -4,7 +4,6 @@ setup:
 .PHONY: generate
 generate:
 	./generate.sh
-	@echo now fix import in cmd/client/versionsclient/versions_client.go
 
 
 validate:

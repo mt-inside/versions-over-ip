@@ -19,9 +19,10 @@ protoc \
     --go_opt=paths=source_relative \
     --go-grpc_out="api/v1alpha1" \
     --go-grpc_opt=paths=source_relative \
-    --go_gapic_out="cmd/client" \
-    --go_gapic_opt="go-gapic-package=versionsclient;versionsclient" \
-    --go_gapic_opt="grpc-service-config=cmd/client/versions_grpc_service_config.json" \
+    --go_gapic_out="." \
+    --go_gapic_opt="go-gapic-package=github.com/mt-inside/versions-over-ip/api/v1alpha1/client;client" \
+    --go_gapic_opt="module=github.com/mt-inside/versions-over-ip" \
+    --go_gapic_opt="grpc-service-config=api/v1alpha1/versions_grpc_service_config.json" \
     "api/v1alpha1/versions.proto"
 
 #go-gapic-package=github.com/mt-inside/versions-over-ip/cmd/client/versionsclient;versionsclient,module=github.com/mt-inside/versions-over-ip

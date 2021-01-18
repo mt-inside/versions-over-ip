@@ -11,7 +11,7 @@ import (
 
 	"github.com/golang/protobuf/ptypes"
 	versions "github.com/mt-inside/versions-over-ip/api/v1alpha1"
-	"github.com/mt-inside/versions-over-ip/cmd/client/versionsclient"
+	"github.com/mt-inside/versions-over-ip/api/v1alpha1/client"
 )
 
 const trace_enabled = false
@@ -25,7 +25,7 @@ func trace(fmt string, args ...interface{}) {
 func main() {
 	ctxt := context.Background()
 
-	client, err := versionsclient.NewVersionsClient(ctxt,
+	client, err := client.NewVersionsClient(ctxt,
 		option.WithGRPCDialOption(grpc.WithInsecure()),
 		option.WithoutAuthentication(),
 	)
@@ -55,7 +55,7 @@ func main() {
 }
 
 func fetchGithub(
-	client *versionsclient.VersionsClient,
+	client *client.VersionsClient,
 	org string, repo string,
 	depth, count int32,
 ) []*versions.Series {
@@ -87,7 +87,7 @@ func fetchGithub(
 	return value.Serieses
 }
 func fetchLinux(
-	client *versionsclient.VersionsClient,
+	client *client.VersionsClient,
 ) []*versions.Series {
 	ctxt := context.Background()
 
