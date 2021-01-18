@@ -211,5 +211,5 @@ func main() {
 	}()
 
 	log.Printf("Starting gRPC server on %s", grpcAddr)
-	s.Serve(lis)
+	_ = s.Serve(lis)
 }

@@ -2,7 +2,6 @@ package fetch
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -25,7 +24,7 @@ type linuxReleases struct {
 }
 
 func Linux() ([]Series, error) {
-	uri := fmt.Sprintf("https://www.kernel.org/releases.json")
+	uri := "https://www.kernel.org/releases.json"
 
 	client := http.Client{
 		Timeout: time.Second * 2,
