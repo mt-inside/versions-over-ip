@@ -6,10 +6,11 @@ import (
 	"log"
 	"time"
 
+	"github.com/fatih/color"
+	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 
-	"github.com/golang/protobuf/ptypes"
 	versions "github.com/mt-inside/versions-over-ip/api/v1alpha1"
 	"github.com/mt-inside/versions-over-ip/api/v1alpha1/client"
 )
@@ -114,18 +115,43 @@ func fetchLinux(
 }
 
 func render(name string, ss []*versions.Series) {
-	fmt.Printf("== %s ==\n", name)
+	c := color.New(color.FgHiWhite).Add(color.Bold)
+	c.Printf("== %s ==\n", name)
 
 	for _, s := range ss {
 		fmt.Printf("%s: ", s.GetName())
 		for _, r := range s.GetReleases() {
 			d, _ := ptypes.Timestamp(r.GetDate())
 
+			if isPreReleaseRelease(r.GetName()) || isPreReleaseSeries(s.GetName()) {
+				color.Set(color.FgHiBlack)
+			} else if isLTSRelease(r.GetName()) || isLTSSeries(s.GetName()) {
+				color.Set(color.FgBlue)
+			}
 			fmt.Printf("%s %s (%d days ago)", r.GetName(), r.GetVersion(), int(time.Since(d).Hours())/24)
-			fmt.Printf(" | ")
+			color.Unset()
+			fmt.Printf("  ")
 		}
 		fmt.Println()
 	}
 
 	fmt.Println()
+}
+
+// TODO: hardcoding bad. Fetchers should register their appropriate strings? Or yanno, implement an interface (on the release objects they return), where we can dispatch to this
+// TODO: pre-release-ness can be an attribute of the release (GH) or the series (linux). The linux release object should have a pointer to its series, and the method on that struct should answer it using that
+func isPreReleaseRelease(name string) bool {
+	return name == "pre"
+}
+
+func isLTSRelease(name string) bool {
+	return false
+}
+
+func isPreReleaseSeries(name string) bool {
+	return name == "mainline"
+}
+
+func isLTSSeries(name string) bool {
+	return name == "longterm"
 }
