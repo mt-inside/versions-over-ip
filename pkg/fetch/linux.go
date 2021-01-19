@@ -1,6 +1,7 @@
 package fetch
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -26,18 +27,18 @@ type linuxReleases struct {
 func Linux() ([]Series, error) {
 	uri := "https://www.kernel.org/releases.json"
 
-	client := http.Client{
-		Timeout: time.Second * 2,
-	}
+	// TODO: use gapic for this... learn how to describe this service and generate a client for it that retries. Just get byte array from that client, or give it something that'll let it JSON unmarshall?
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
-	req, err := http.NewRequest(http.MethodGet, uri, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, uri, nil)
 	if err != nil {
 		return nil, err
 	}
 
 	req.Header.Set("User-Agent", "versions")
 
-	res, err := client.Do(req)
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
