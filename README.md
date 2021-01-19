@@ -2,9 +2,8 @@
 
 gapic (client)
 * oneof - `md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v&%s=%v", "org", url.QueryEscape(req.App.(*apipb.VersionsRequest_Github).Github.GetOrg()), "repo", url.QueryEscape(req.App.(*apipb.VersionsRequest_Github).Github.GetRepo())))`
+  * reason: gapic doesn't support OneOf yet (think there's a GH issue for it)
   * hack: delete md and following line
-* bug in golang import
-  * hack: rename import alias
 
 
 # Raison d'être
