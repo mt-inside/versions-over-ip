@@ -8,12 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/anypb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	versionspb "github.com/mt-inside/versions-over-ip/api/v1alpha1"
 	lropb "google.golang.org/genproto/googleapis/longrunning"
@@ -109,7 +110,7 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 		return notDoneResponse, status.Errorf(codes.Unknown, "Error fetching versions for request %s: %v.", in.Name, err)
 	}
 
-	value, _ := ptypes.MarshalAny(
+	value, _ := anypb.New(
 		&versionspb.VersionsResponse{Serieses: series2proto(ss)},
 	)
 	resp := &lropb.Operation{
@@ -130,7 +131,7 @@ func series2proto(ss []fetch.Series) (res []*versionspb.Series) {
 	for i, s := range ss {
 		rs := []*versionspb.Release{}
 		for n, r := range s.Releases {
-			d, _ := ptypes.TimestampProto(r.Date)
+			d := timestamppb.New(r.Date)
 			rs = append(rs, &versionspb.Release{Name: n, Version: r.Version.String(), Date: d})
 		}
 

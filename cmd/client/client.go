@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 
@@ -121,7 +120,7 @@ func render(name string, ss []*versions.Series) {
 	for _, s := range ss {
 		fmt.Printf("%s: ", s.GetName())
 		for _, r := range s.GetReleases() {
-			d, _ := ptypes.Timestamp(r.GetDate())
+			d := r.GetDate().AsTime().Local()
 
 			if isPreReleaseRelease(r.GetName()) || isPreReleaseSeries(s.GetName()) {
 				color.Set(color.FgHiBlack)
