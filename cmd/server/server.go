@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"log"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/go-logr/logr"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
@@ -16,6 +16,7 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	"github.com/mt-inside/go-usvc"
 	versionspb "github.com/mt-inside/versions-over-ip/api/v1alpha1"
 	lropb "google.golang.org/genproto/googleapis/longrunning"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
@@ -36,6 +37,8 @@ var (
 
 type versionsServer struct {
 	versionspb.UnimplementedVersionsServer
+
+	log logr.Logger
 }
 
 func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.VersionsRequest) (*lropb.Operation, error) {
@@ -48,7 +51,7 @@ func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.Versio
 		Done: false,
 	}
 
-	log.Printf("Long-running operation started: %s", uid.String())
+	s.log.V(1).Info("Long-running operation started", "work item id", uid.String())
 
 	return res, nil
 }
@@ -70,14 +73,16 @@ func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.Versio
 * * Delete() - optional - remove from map, ie client no longer interested in the *result*. Does not cancel it from happening
  */
 
-type lroServer struct{}
+type lroServer struct {
+	log logr.Logger
+}
 
 func (s *lroServer) ListOperations(ctx context.Context, in *lropb.ListOperationsRequest) (*lropb.ListOperationsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "List is not implemented")
 }
 
 func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationRequest) (*lropb.Operation, error) {
-	log.Printf("GetOperation: %s", in.Name)
+	s.log.V(1).Info("GetOperation", "name", in.Name)
 
 	notDoneResponse := &lropb.Operation{
 		Name: in.Name,
@@ -96,16 +101,22 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 	switch app := item.Req.GetApp().(type) {
 	case *versionspb.VersionsRequest_Github:
 		gh := app.Github
-		log.Printf("GetVersions(github: %s/%s)", gh.GetOrg(), gh.GetRepo())
+		s.log.V(1).Info("GetVersions", "type", "github", "address", gh.GetOrg()+"/"+gh.GetRepo())
 
-		ss, err = fetch.Github(gh.GetOrg(), gh.GetRepo(), gh.GetDepth(), gh.GetCount())
+		if gh.GetRepo() == "go" || gh.GetRepo() == "pfsense" || gh.GetRepo() == "nginx" {
+			// FIXME hack. The GH website shows Releases for golang/go, but the API returns an empty list...
+			// fix by falling back to tags if release names (?) are an empty list
+			ss, err = fetch.Github(s.log, gh.GetOrg(), gh.GetRepo(), true, gh.GetDepth(), gh.GetCount())
+		} else {
+			ss, err = fetch.Github(s.log, gh.GetOrg(), gh.GetRepo(), false, gh.GetDepth(), gh.GetCount())
+		}
 	case *versionspb.VersionsRequest_Linux:
-		log.Printf("GetVersions(linux)")
+		s.log.V(1).Info("GetVersions", "type", "linux")
 
 		ss, err = fetch.Linux()
 	}
 	if err != nil {
-		log.Printf("error fetching: %v", err)
+		s.log.V(1).Error(err, "can't fetch")
 		// TODO: translate errors, eg dealine exceeded (DeadlineExceeded) vs json parse error (InvalidArgument), etc
 		return notDoneResponse, status.Errorf(codes.Unknown, "Error fetching versions for request %s: %v.", in.Name, err)
 	}
@@ -119,7 +130,7 @@ func (s *lroServer) GetOperation(ctxt context.Context, in *lropb.GetOperationReq
 		Result: &lropb.Operation_Response{Response: value},
 	}
 
-	log.Printf("LRO Complete: %s", in.Name)
+	s.log.Info("LRO Complete", "name", in.Name)
 	delete(workItems, in.Name)
 
 	return resp, nil
@@ -145,7 +156,7 @@ func series2proto(ss []fetch.Series) (res []*versionspb.Series) {
 }
 
 func (s *lroServer) WaitOperation(ctxt context.Context, in *lropb.WaitOperationRequest) (*lropb.Operation, error) {
-	log.Printf("WaitOperation: %s", in.Name)
+	s.log.V(1).Info("WaitOperation", "name", in.Name)
 
 	var resp *lropb.Operation
 	var err error
@@ -176,10 +187,12 @@ func (s *lroServer) DeleteOperation(ctx context.Context, in *lropb.DeleteOperati
 	return nil, status.Error(codes.Unimplemented, "Delete is not implemented")
 }
 
-type healthServer struct{}
+type healthServer struct {
+	log logr.Logger
+}
 
 func (s *healthServer) Check(ctxt context.Context, in *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
-	log.Printf("grpc Health::Check()")
+	s.log.V(2).Info("grpc Health::Check()")
 	return &healthpb.HealthCheckResponse{Status: healthpb.HealthCheckResponse_SERVING}, nil
 }
 func (s *healthServer) Watch(in *healthpb.HealthCheckRequest, srv healthpb.Health_WatchServer) error {
@@ -187,18 +200,23 @@ func (s *healthServer) Watch(in *healthpb.HealthCheckRequest, srv healthpb.Healt
 }
 
 func main() {
+	log := usvc.GetLogger(true, 10)
+
 	lis, err := net.Listen("tcp", grpcAddr)
 	if err != nil {
-		log.Fatalf("failed to listen on %s: %v", grpcAddr, err)
+		log.Error(err, "failed to listen", "addr", grpcAddr)
+		os.Exit(1)
 	}
 
 	sopts := []grpc.ServerOption{grpc.MaxConcurrentStreams(10)}
 	s := grpc.NewServer(sopts...)
 
-	versionspb.RegisterVersionsServer(s, &versionsServer{})
-	healthpb.RegisterHealthServer(s, &healthServer{})
-	lropb.RegisterOperationsServer(s, &lroServer{})
+	versionspb.RegisterVersionsServer(s, &versionsServer{log: log})
+	healthpb.RegisterHealthServer(s, &healthServer{log})
+	lropb.RegisterOperationsServer(s, &lroServer{log})
 
+	// TODO: argh what the shutdown?
+	// TODO: add grpc server to golang-graceful-shutdown
 	idleConnsClosed := make(chan struct{})
 	go func() {
 		sigint := make(chan os.Signal, 1)
@@ -207,10 +225,10 @@ func main() {
 		<-sigint
 
 		s.GracefulStop()
-		log.Printf("Shutting down...")
+		log.Info("Shutting down...")
 		close(idleConnsClosed)
 	}()
 
-	log.Printf("Starting gRPC server on %s", grpcAddr)
+	log.Info("Starting gRPC server", "addr", grpcAddr)
 	_ = s.Serve(lis)
 }

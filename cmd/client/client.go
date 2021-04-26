@@ -127,7 +127,7 @@ func render(name string, ss []*versions.Series) {
 			} else if isLTSRelease(r.GetName()) || isLTSSeries(s.GetName()) {
 				color.Set(color.FgBlue)
 			}
-			fmt.Printf("%s %s (%d days ago)", r.GetName(), r.GetVersion(), int(time.Since(d).Hours())/24)
+			fmt.Printf("%s (%d days ago)", r.GetVersion(), int(time.Since(d).Hours())/24)
 			color.Unset()
 			fmt.Printf("  ")
 		}
