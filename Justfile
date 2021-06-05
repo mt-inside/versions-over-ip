@@ -1,11 +1,14 @@
-quick:
-	./build/quick.sh
+default:
+	@just --list
 
 setup:
 	./build/setup.sh
 
 generate:
 	./build/generate.sh
+
+quick:
+	./build/quick.sh
 
 validate:
 	go fmt ./...
