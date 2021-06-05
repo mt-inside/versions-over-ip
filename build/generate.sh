@@ -12,7 +12,6 @@
 protoc \
     -I "api-common-protos" \
     -I "api/v1alpha1" \
-    --experimental_allow_proto3_optional \
     --descriptor_set_out="api/v1alpha1/versions.proto.pb" \
     --include_imports \
     --go_out="api/v1alpha1" \
