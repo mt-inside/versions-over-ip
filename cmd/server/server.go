@@ -200,7 +200,7 @@ func (s *healthServer) Watch(in *healthpb.HealthCheckRequest, srv healthpb.Healt
 }
 
 func main() {
-	log := usvc.GetLogger(true, 10)
+	log := usvc.GetLogger(true, 0)
 
 	lis, err := net.Listen("tcp", grpcAddr)
 	if err != nil {
