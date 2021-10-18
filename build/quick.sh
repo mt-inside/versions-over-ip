@@ -4,5 +4,6 @@
 
 go run cmd/client/client.go
 
-echo killing $pid
-kill -- -$pid # `go run` forks, so this kills the whole process group (the PID of the leader is the PGID of the group)
+pgid=$(cat /proc/$pid/stat | awk '{ print $5 }')  # relies on process name not having spaces
+echo "killing group $pgid (under parent $pid)"
+kill -- -$pgid # `go run` forks, so this kills the whole process group
