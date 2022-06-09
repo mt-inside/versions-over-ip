@@ -1,0 +1,302 @@
+[
+  {
+    "name": "v1.23.0-alpha.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.23.0-alpha.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.23.0-alpha.0",
+    "commit": {
+      "sha": "9f47110aa29094ed2878cf1d85874cb59214664a",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/9f47110aa29094ed2878cf1d85874cb59214664a"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIzLjAtYWxwaGEuMA=="
+  },
+  {
+    "name": "v1.22.1-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.1-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.1-rc.0",
+    "commit": {
+      "sha": "cbb1e46500ce3f3ce99dfc2ca12252fd69e65c6a",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/cbb1e46500ce3f3ce99dfc2ca12252fd69e65c6a"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjEtcmMuMA=="
+  },
+  {
+    "name": "v1.22.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0",
+    "commit": {
+      "sha": "c2b5237ccd9c0f1d600d3072634ca66cefdf272f",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/c2b5237ccd9c0f1d600d3072634ca66cefdf272f"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjA="
+  },
+  {
+    "name": "v1.22.0-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-rc.0",
+    "commit": {
+      "sha": "f27a0868d5864a74f8e8f3de1bb395ff2bc4a8bf",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/f27a0868d5864a74f8e8f3de1bb395ff2bc4a8bf"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtcmMuMA=="
+  },
+  {
+    "name": "v1.22.0-beta.2",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-beta.2",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-beta.2",
+    "commit": {
+      "sha": "68922e3deb4696f4c0268ee68e03c816acd4feec",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/68922e3deb4696f4c0268ee68e03c816acd4feec"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYmV0YS4y"
+  },
+  {
+    "name": "v1.22.0-beta.1",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-beta.1",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-beta.1",
+    "commit": {
+      "sha": "e326c00bc5c1fc1a9897793e97b1055837979c0c",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/e326c00bc5c1fc1a9897793e97b1055837979c0c"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYmV0YS4x"
+  },
+  {
+    "name": "v1.22.0-beta.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-beta.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-beta.0",
+    "commit": {
+      "sha": "a3f24e8459465495738af1b9cc6c3db80696e3c1",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/a3f24e8459465495738af1b9cc6c3db80696e3c1"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYmV0YS4w"
+  },
+  {
+    "name": "v1.22.0-alpha.3",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-alpha.3",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-alpha.3",
+    "commit": {
+      "sha": "0322d34a3e0b64cd8a1439e149b901e90aef251d",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/0322d34a3e0b64cd8a1439e149b901e90aef251d"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYWxwaGEuMw=="
+  },
+  {
+    "name": "v1.22.0-alpha.2",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-alpha.2",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-alpha.2",
+    "commit": {
+      "sha": "7705b300e2085c3864bb1e49a7302bf17f080219",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/7705b300e2085c3864bb1e49a7302bf17f080219"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYWxwaGEuMg=="
+  },
+  {
+    "name": "v1.22.0-alpha.1",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-alpha.1",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-alpha.1",
+    "commit": {
+      "sha": "dc6b04c142a47885bff38a1d6f7c547c91d0343e",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/dc6b04c142a47885bff38a1d6f7c547c91d0343e"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYWxwaGEuMQ=="
+  },
+  {
+    "name": "v1.22.0-alpha.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.22.0-alpha.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.22.0-alpha.0",
+    "commit": {
+      "sha": "9c9af69ea60519b610a70261fb1b8bb81a2a5d04",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/9c9af69ea60519b610a70261fb1b8bb81a2a5d04"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIyLjAtYWxwaGEuMA=="
+  },
+  {
+    "name": "v1.21.4-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.4-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.4-rc.0",
+    "commit": {
+      "sha": "ff7c569f15751cb14e69d81d68dbd4e031b3cdcc",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/ff7c569f15751cb14e69d81d68dbd4e031b3cdcc"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjQtcmMuMA=="
+  },
+  {
+    "name": "v1.21.3",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.3",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.3",
+    "commit": {
+      "sha": "ca643a4d1f7bfe34773c74f79527be4afd95bf39",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/ca643a4d1f7bfe34773c74f79527be4afd95bf39"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjM="
+  },
+  {
+    "name": "v1.21.3-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.3-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.3-rc.0",
+    "commit": {
+      "sha": "ad0c897c8837e5412ad69efd927cddf8d65a932b",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/ad0c897c8837e5412ad69efd927cddf8d65a932b"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjMtcmMuMA=="
+  },
+  {
+    "name": "v1.21.2",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.2",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.2",
+    "commit": {
+      "sha": "092fbfbf53427de67cac1e9fa54aaa09a28371d7",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/092fbfbf53427de67cac1e9fa54aaa09a28371d7"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjI="
+  },
+  {
+    "name": "v1.21.2-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.2-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.2-rc.0",
+    "commit": {
+      "sha": "286709307da5adb62e78d989b7ed846355d5c88e",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/286709307da5adb62e78d989b7ed846355d5c88e"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjItcmMuMA=="
+  },
+  {
+    "name": "v1.21.1",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.1",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.1",
+    "commit": {
+      "sha": "5e58841cce77d4bc13713ad2b91fa0d961e69192",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/5e58841cce77d4bc13713ad2b91fa0d961e69192"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjE="
+  },
+  {
+    "name": "v1.21.1-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.1-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.1-rc.0",
+    "commit": {
+      "sha": "2f3131544689d6658bda413ccc6bac4bfa4180e9",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/2f3131544689d6658bda413ccc6bac4bfa4180e9"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjEtcmMuMA=="
+  },
+  {
+    "name": "v1.21.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0",
+    "commit": {
+      "sha": "cb303e613a121a29364f75cc67d3d580833a7479",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/cb303e613a121a29364f75cc67d3d580833a7479"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjA="
+  },
+  {
+    "name": "v1.21.0-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-rc.0",
+    "commit": {
+      "sha": "6b526c57934f310f9039309098afaf7fc96a63c5",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/6b526c57934f310f9039309098afaf7fc96a63c5"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtcmMuMA=="
+  },
+  {
+    "name": "v1.21.0-beta.1",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-beta.1",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-beta.1",
+    "commit": {
+      "sha": "40a411a61af315f955f11ee97397beecf432ff4f",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/40a411a61af315f955f11ee97397beecf432ff4f"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtYmV0YS4x"
+  },
+  {
+    "name": "v1.21.0-beta.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-beta.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-beta.0",
+    "commit": {
+      "sha": "66fa2c49e28b9dcf478a87636971bc7d241b2849",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/66fa2c49e28b9dcf478a87636971bc7d241b2849"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtYmV0YS4w"
+  },
+  {
+    "name": "v1.21.0-alpha.3",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-alpha.3",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-alpha.3",
+    "commit": {
+      "sha": "efb41ea0fbbddbfa5408c10dd1eccb239c534188",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/efb41ea0fbbddbfa5408c10dd1eccb239c534188"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtYWxwaGEuMw=="
+  },
+  {
+    "name": "v1.21.0-alpha.2",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-alpha.2",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-alpha.2",
+    "commit": {
+      "sha": "bae644e85e085ce668c3edf23e8789fb623331b4",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/bae644e85e085ce668c3edf23e8789fb623331b4"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtYWxwaGEuMg=="
+  },
+  {
+    "name": "v1.21.0-alpha.1",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-alpha.1",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-alpha.1",
+    "commit": {
+      "sha": "624cb1c82fb4b6804f44e77dc6475b1b4e3a9a39",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/624cb1c82fb4b6804f44e77dc6475b1b4e3a9a39"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtYWxwaGEuMQ=="
+  },
+  {
+    "name": "v1.21.0-alpha.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.21.0-alpha.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.21.0-alpha.0",
+    "commit": {
+      "sha": "98bc258bf5516b6c60860e06845b899eab29825d",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/98bc258bf5516b6c60860e06845b899eab29825d"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIxLjAtYWxwaGEuMA=="
+  },
+  {
+    "name": "v1.20.10-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.20.10-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.20.10-rc.0",
+    "commit": {
+      "sha": "70e609d5935fdb5b4b00b70db602c1a9fe8b267c",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/70e609d5935fdb5b4b00b70db602c1a9fe8b267c"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIwLjEwLXJjLjA="
+  },
+  {
+    "name": "v1.20.9",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.20.9",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.20.9",
+    "commit": {
+      "sha": "7a576bc3935a6b555e33346fd73ad77c925e9e4a",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/7a576bc3935a6b555e33346fd73ad77c925e9e4a"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIwLjk="
+  },
+  {
+    "name": "v1.20.9-rc.0",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.20.9-rc.0",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.20.9-rc.0",
+    "commit": {
+      "sha": "fae91cad6d01b70a65963297a7a99f33e429f1de",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/fae91cad6d01b70a65963297a7a99f33e429f1de"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIwLjktcmMuMA=="
+  },
+  {
+    "name": "v1.20.8",
+    "zipball_url": "https://api.github.com/repos/kubernetes/kubernetes/zipball/refs/tags/v1.20.8",
+    "tarball_url": "https://api.github.com/repos/kubernetes/kubernetes/tarball/refs/tags/v1.20.8",
+    "commit": {
+      "sha": "5575935422cc1cf5169dfc8847cb587aa47bac5a",
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/commits/5575935422cc1cf5169dfc8847cb587aa47bac5a"
+    },
+    "node_id": "MDM6UmVmMjA1ODA0OTg6cmVmcy90YWdzL3YxLjIwLjg="
+  }
+]
