@@ -121,7 +121,7 @@ func fetchLinux(
 
 func render(name string, ss []*versions.Series) {
 	c := color.New(color.FgHiWhite).Add(color.Bold)
-	c.Printf("== %s ==\n", name)
+	c.Printf("> %s\n", name)
 
 	for _, s := range ss {
 		fmt.Printf("%s: ", s.GetName())

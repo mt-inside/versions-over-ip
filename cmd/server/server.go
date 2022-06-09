@@ -51,7 +51,7 @@ func (s *versionsServer) GetVersions(ctxt context.Context, in *versionspb.Versio
 		Done: false,
 	}
 
-	s.log.V(1).Info("Long-running operation started", "work item id", uid.String())
+	s.log.Info("Long-running operation started", "work item id", uid.String())
 
 	return res, nil
 }
