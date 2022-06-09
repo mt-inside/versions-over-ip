@@ -1,3 +1,12 @@
+# TODO
+_see GH_
+
+Direction:
+* Maybe forget the NATS part; that was meant to be for scatter/gather in-line queries, whereas now it's going to be a monitor. Should still offer LRO API, and should do requests in-line (on a background thread). Always runs in k8s; CLI can hit it any time. Polling client runs as k8s CronJob, asks it about each repo in turn, reports to slack.
+  * should report them all in one go, so should serialise its progress in case of crashes and restart on the last repo it was attempting - learn to do this
+  * something should track difference-since-last-time and be able to tell you what's new. Since the CLI wants to do this too, feels like the server should do it.
+    * "reverse event source" - every time the server is asked to look at anything, it compares to the last version it saw, records an event if it's changed, and sticks that somewhere - kafka/nats? Each event gets an ID, and clients can ask to check a set of repos and get updates since their last seen ID
+
 # Current workarounds
 
 gapic (client)
